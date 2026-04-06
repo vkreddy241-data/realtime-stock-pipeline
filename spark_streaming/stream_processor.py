@@ -10,7 +10,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import (
     StructType, StructField,
-    StringType, DoubleType, LongType, TimestampType,
+    StringType, DoubleType, LongType,
 )
 
 # ---------------------------------------------------------------------------
@@ -111,11 +111,11 @@ def main():
     parsed  = parse_events(raw)
 
     # Stream 1: raw ticks → Delta Lake
-    ticks_query = write_delta(parsed, DELTA_OUTPUT + "/raw", CHECKPOINT_DIR + "/raw")
+    write_delta(parsed, DELTA_OUTPUT + "/raw", CHECKPOINT_DIR + "/raw")
 
     # Stream 2: VWAP aggregations → Delta Lake
-    vwap_df     = compute_vwap_windows(parsed)
-    vwap_query  = write_delta(vwap_df, DELTA_OUTPUT + "/vwap_1m", CHECKPOINT_DIR + "/vwap_1m")
+    vwap_df = compute_vwap_windows(parsed)
+    write_delta(vwap_df, DELTA_OUTPUT + "/vwap_1m", CHECKPOINT_DIR + "/vwap_1m")
 
     spark.streams.awaitAnyTermination()
 

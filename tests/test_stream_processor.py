@@ -6,11 +6,11 @@ Run: pytest tests/ -v
 import pytest
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
-from pyspark.sql.types import StructType, StructField, StringType, DoubleType, LongType
-import sys, os
+import sys
+import os
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from spark_streaming.stream_processor import TICK_SCHEMA, parse_events
+from spark_streaming.stream_processor import TICK_SCHEMA
 
 
 @pytest.fixture(scope="session")
@@ -34,8 +34,6 @@ SAMPLE_TICKS = [
 
 def make_raw_df(spark, json_strings):
     """Simulate the Kafka 'value' column (binary string)."""
-    rows = [(s.encode("utf-8"),) for s in json_strings]
-    schema = StructType([StructField("value", StringType(), True)])
     return spark.createDataFrame([(s,) for s in json_strings], ["value"])
 
 

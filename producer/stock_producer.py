@@ -9,7 +9,6 @@ import logging
 from datetime import datetime
 import yfinance as yf
 from kafka import KafkaProducer
-from kafka.errors import KafkaError
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)

@@ -9,13 +9,11 @@ Schedule:
 
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.python import PythonOperator, BranchPythonOperator
+from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
 from airflow.providers.amazon.aws.operators.emr import (
     EmrAddStepsOperator, EmrCreateJobFlowOperator,
 )
-from airflow.providers.amazon.aws.sensors.emr import EmrStepSensor
-from airflow.utils.trigger_rule import TriggerRule
 
 # ---------------------------------------------------------------------------
 # Default args
